@@ -1,13 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
-
-
 @theme {
-  --font-inter: "Inter", sans-serif; 
-  --color-dark-blue: #0D003B;
-  --color-aspide-blue: #5C59FD;
-  --color-light-blue: #81C8F2;
+  --font-inter: "Inter", sans-serif;
+  --color-dark-blue: #0d003b;
+  --color-aspide-blue: #5c59fd;
+  --color-light-blue: #81c8f2;
 }
 
 :root {
@@ -17,7 +15,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #0D003B;
+  background-color: #0d003b;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
