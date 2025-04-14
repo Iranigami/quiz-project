@@ -5,11 +5,17 @@ type Props = {
   answerNumber?:number,
   answer:string,
   correct:boolean,
-  onAnswered: (answerNumber:number) => void;
+  isAnswered:boolean,
+  onAnswered: () => void;
 }
 
 
-export default function AnswerButton({className, answerNumber, answer, correct}: Props) {
+export default function AnswerButton({className, answerNumber, answer, correct, isAnswered, onAnswered}: Props) {
+
+  const toggleClick = ()=>{
+    setState(correct ? "correct" : "incorrect");
+    onAnswered();
+  }
 
   const [state, setState] = useState("default") //default, correct, incorrect
 
@@ -18,11 +24,10 @@ export default function AnswerButton({className, answerNumber, answer, correct}:
       ${state==="default" && "bg-white text-dark-blue"} 
       ${state === "correct" && "bg-[#44BE72] text-white"}
       ${state === "incorrect" && "bg-[#E3605F] text-white"}
+      ${state === "default" && isAnswered && "opacity-[50%]"}
       ${className}`}
-      
-      onClick={()=>{
-        setState(correct ? "correct" : "incorrect")
-      }}>
+      disabled = {isAnswered}
+      onClick={toggleClick}>
       <div className="opacity-[50%] text-[14px] absolute top-[16px] left-[16px]">
         {answerNumber}
       </div>

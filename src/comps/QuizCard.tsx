@@ -16,8 +16,8 @@ export default function QuizCard({tour, question, questionNumber, answers, corre
 	const navigate = useNavigate();
 	const [isAnswered, toggleAnswered] = useState(false);
     return(
-			<div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed">
-				<div className="bg-[#ECF7FF] rounded-[20px] w-fill h-fill font-inter text-dark-blue font-semibold justify-center items-center mx-auto py-[10%]">
+			<div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold">
+				<div className="bg-[#ECF7FF] rounded-[20px] w-fill h-[736px] justify-center items-center mx-auto py-[10%]">
 					<div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
 						<span>{tour} тур</span>
 					</div>
@@ -36,7 +36,8 @@ export default function QuizCard({tour, question, questionNumber, answers, corre
 						answer={answer}
 						answerNumber={index+1}
 						correct={answer===correctAnswer}
-						onAnswered={(answerNumber)=>{}}/>
+						isAnswered={isAnswered}
+						onAnswered={()=>{toggleAnswered(true)}}/>
           ))}
 				</div>
 				<div className="flex gap-[2px] mt-[2px]">
@@ -45,7 +46,9 @@ export default function QuizCard({tour, question, questionNumber, answers, corre
 						onClick={()=>{navigate("/")}}>
 						НА ГЛАВНУЮ
 					</button>
-					<button className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px]">
+					<button 
+						className={`bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer ${!isAnswered && "opacity-[40%]"}`}
+						disabled = {isAnswered}>
 						ДАЛЕЕ
 					</button>
 				</div>
