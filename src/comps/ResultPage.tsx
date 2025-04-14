@@ -2,18 +2,21 @@ import { useNavigate } from "react-router-dom";
 import great from "../assets/images/great.png";
 import good from "../assets/images/good.png";
 import bad from "../assets/images/bad.png";
+import { useState } from "react";
 
 type Props = {
   tourNumber: number;
-  result: number;
+  answeredQuestions: number;
   totalQuestions: number;
 };
 
 export default function ResultPage({
   tourNumber,
-  result,
+  answeredQuestions,
   totalQuestions,
 }: Props) {
+	const result = totalQuestions/answeredQuestions;
+
   const navigate = useNavigate();
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter font-semibold">
@@ -21,6 +24,9 @@ export default function ResultPage({
         <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
           <span>{tourNumber} тур</span>
         </div>
+		{result===1 && <div>ТЕКСТ КРУТОЙ</div>}
+		{result<=2 && result!==1 && <div>ТЕКСТ ХОРОШИЙ</div>}
+		{result>2 && <div>ТЕКСТ ПЛОХОЙ</div>}
       </div>
       <div className="flex gap-[2px] mt-[2px]">
         <button

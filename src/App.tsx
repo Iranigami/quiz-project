@@ -15,7 +15,7 @@ function App() {
   const answers = ["ФРЕГАТ", "ЛИНКОР", "БОТ", "КОРВЕТ"];
   const correctAnswer = "ФРЕГАТ";
 
-  const res = 12;
+  const res = 6;
 
   return (
     <Router>
@@ -42,7 +42,7 @@ function App() {
           path="/result"
           element={
             <ResultPage
-              result={res}
+              answeredQuestions={res}
               totalQuestions={questionsCount}
               tourNumber={tour}
             />
