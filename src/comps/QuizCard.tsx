@@ -12,6 +12,7 @@ type Props = {
 }
 
 export default function QuizCard({tour, question, questionNumber, answers, correctAnswer}: Props){
+	const [isModalOpen, toggleIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 	const [isAnswered, toggleAnswered] = useState(false);
     return(
@@ -48,6 +49,8 @@ export default function QuizCard({tour, question, questionNumber, answers, corre
 						ДАЛЕЕ
 					</button>
 				</div>
+				{isModalOpen && 
+					<div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0"/>}
 			</div>
     )
 }
