@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import AnswerButton from "./AnswerButton"
 import { useState } from "react"
+import Modal from "./Modal"
 
 
 type Props = {
@@ -12,7 +13,7 @@ type Props = {
 }
 
 export default function QuizCard({tour, question, questionNumber, answers, correctAnswer}: Props){
-	const [isModalOpen, toggleIsModalOpen] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	const navigate = useNavigate();
 	const [isAnswered, toggleAnswered] = useState(false);
     return(
@@ -43,7 +44,7 @@ export default function QuizCard({tour, question, questionNumber, answers, corre
 				<div className="flex gap-[2px] mt-[2px]">
 					<button 
 						className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
-						onClick={()=>{navigate("/")}}>
+						onClick={()=>{setIsModalOpen(true)}}>
 						НА ГЛАВНУЮ
 					</button>
 					<button 
@@ -53,7 +54,11 @@ export default function QuizCard({tour, question, questionNumber, answers, corre
 					</button>
 				</div>
 				{isModalOpen && 
-					<div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0"/>}
+					<>					
+					<div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0"/>
+					<Modal
+						onClose={() => {setIsModalOpen(false)}}/>
+					</>}
 			</div>
     )
 }
