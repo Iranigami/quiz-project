@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import AnswerButton from "./AnswerButton";
+import AnswerButton from "../comps/AnswerButton";
 import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "../comps/Modal";
 import { tours } from "../data";
 
 type Props = {
@@ -20,7 +20,9 @@ export default function QuizCard({ onEndTour }: Props) {
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold">
       {(question.type === 0 || question.type === 1) && (
         <>
-          <div className={`bg-[#ECF7FF] rounded-[20px] w-fill ${question.type ? "h-[549px]" : "h-[736px]"}   justify-center items-center mx-auto py-[10%]`}>
+          <div
+            className={`bg-[#ECF7FF] rounded-[20px] w-fill ${question.type ? "h-[549px]" : "h-[736px]"}   justify-center items-center mx-auto py-[10%]`}
+          >
             <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
               <span>{Number(tourId) + 1} тур</span>
             </div>
@@ -29,7 +31,9 @@ export default function QuizCard({ onEndTour }: Props) {
                 ВОПРОС {Number(questionId) + 1}/{questionCount}
               </div>
               <div className="text-[60px] tracking-[-2%] leading-[100%]">
-                <pre className="font-inter text-dark-blue font-semibold text-[60px] tracking-[-2%] leading-[100%] text-center">{question.title}</pre>
+                <pre className="font-inter text-dark-blue font-semibold text-[60px] tracking-[-2%] leading-[100%] text-center">
+                  {question.title}
+                </pre>
               </div>
             </div>
           </div>
@@ -65,12 +69,17 @@ export default function QuizCard({ onEndTour }: Props) {
           className={`bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer ${!isAnswered && "opacity-[40%]"}`}
           disabled={!isAnswered}
           onClick={() => {
-            if (Number(questionId) == questionCount - 1) {
+            if (question.type === 1) {
               onEndTour(correctAnswers);
-              navigate(`/result/${tourId}`);
+              navigate(`/info/${tourId}/${questionId}`);
             } else {
-              toggleAnswered(false);
-              navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
+              if (Number(questionId) == questionCount - 1) {
+                onEndTour(correctAnswers);
+                navigate(`/result/${tourId}`);
+              } else {
+                toggleAnswered(false);
+                navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
+              }
             }
           }}
         >

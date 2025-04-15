@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import correctIcon from "../assets/images/icons/correct.svg"
-import incorrectIcon from "../assets/images/icons/incorrect.svg"
+import correctIcon from "../assets/images/icons/correct.svg";
+import incorrectIcon from "../assets/images/icons/incorrect.svg";
 
 type Props = {
   className?: string;
@@ -30,8 +30,8 @@ export default function AnswerButton({
   useEffect(() => {
     !isAnswered && setState("default");
   }, [isAnswered]);
-  switch(type) {
-    case(0) : {
+  switch (type) {
+    case 0: {
       return (
         <button
           className={`w-full min-h-[120px] rounded-[20px] justify-center items-center flex relative cursor-pointer
@@ -50,7 +50,7 @@ export default function AnswerButton({
         </button>
       );
     }
-    case(1) : {
+    case 1: {
       return (
         <button
           className={`w-full h-[307px] rounded-[20px] justify-center items-center flex relative cursor-pointer
@@ -62,23 +62,25 @@ export default function AnswerButton({
         >
           <div className="text-[14px] absolute top-[16px] left-[16px] flex z-100 justify-between w-fill right-[16px]">
             <span className="opacity-[50%]">{answerNumber}</span>
-            <div className={`w-[24px] h-[24px] rounded-[4px] justify-center items-center flex
+            <div
+              className={`w-[24px] h-[24px] rounded-[4px] justify-center items-center flex
               ${state === "default" && "bg-white border-[#D0D5DD] border-[1.5px]"}
               ${state === "correct" && "bg-[#44BE72]"}
-              ${state === "incorrect" && "bg-[#E3605F]"}`}>
-              {
-                state === "correct" && (
-                  <img src={correctIcon} alt="correct" className="" />
-                )
-              }
-              {
-                state === "incorrect" && (
-                  <img src={incorrectIcon} alt="correct" className="" />
-                )
-              }
+              ${state === "incorrect" && "bg-[#E3605F]"}`}
+            >
+              {state === "correct" && (
+                <img src={correctIcon} alt="correct" className="" />
+              )}
+              {state === "incorrect" && (
+                <img src={incorrectIcon} alt="correct" className="" />
+              )}
             </div>
           </div>
-            <img src={`/src/assets/images/${answer}.png`} alt="answer" className={`z-[-1] absolute ${state === "default" && isAnswered && "opacity-[50%]"}`} />
+          <img
+            src={`/src/assets/images/${answer}.png`}
+            alt="answer"
+            className={`z-[-1] absolute ${state === "default" && isAnswered && "opacity-[50%]"}`}
+          />
         </button>
       );
     }

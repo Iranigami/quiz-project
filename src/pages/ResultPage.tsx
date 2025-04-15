@@ -4,7 +4,7 @@ import good from "../assets/images/good.png";
 import bad from "../assets/images/bad.png";
 import { useState } from "react";
 import { tours } from "../data";
-import Modal from "./Modal";
+import Modal from "../comps/Modal";
 
 type Props = {
   answeredQuestions: number;
@@ -75,7 +75,7 @@ export default function ResultPage({ answeredQuestions }: Props) {
             navigate(`/tour/${Number(tourId) + 1}`); //добавить обработку последнего тура
           }}
         >
-          ДАЛЕЕ
+          ПРОДОЛЖИТЬ КВИЗ
         </button>
       </div>
       {isModalOpen && (
