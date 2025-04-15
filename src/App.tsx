@@ -11,6 +11,7 @@ import {
 import ResultPage from "./pages/ResultPage";
 import { tours } from "./data";
 import InfoPage from "./pages/InfoPage";
+import PageNotFound from "./pages/PageNotFound";
 
 function App() {
   const [result, setResult] = useState(0);
@@ -36,6 +37,7 @@ function App() {
         />
         <Route path="/info/:tourId/:questionId" element={<InfoPage />} />
       </Routes>
+      
     </Router>
   );
 }
