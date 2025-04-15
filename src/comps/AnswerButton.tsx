@@ -23,7 +23,7 @@ export default function AnswerButton({
   };
 
   const [state, setState] = useState("default"); //default, correct, incorrect
-  
+
   useEffect(() => {
     !isAnswered && setState("default");
   }, [isAnswered]);

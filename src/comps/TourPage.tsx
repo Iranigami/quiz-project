@@ -6,7 +6,7 @@ import Modal from "./Modal";
 
 export default function TourPage() {
   const navigate = useNavigate();
-  const {tourId} = useParams();
+  const { tourId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter font-semibold">
@@ -18,7 +18,7 @@ export default function TourPage() {
         />
         <div className="mx-auto text-center w-[1222px]">
           <div className="text-aspide-blue text-[20px]">
-            {Number(tourId)+1} тур
+            {Number(tourId) + 1} тур
           </div>
           <div className="text-[80px] tracking-[-2%] leading-[100%]">
             {tours[Number(tourId)].title}
@@ -43,17 +43,16 @@ export default function TourPage() {
           ДАЛЕЕ
         </button>
       </div>
-            {isModalOpen && (
-              <>
-                <div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0" />
-                <Modal
-                  onClose={() => {
-                    setIsModalOpen(false);
-                  }}
-                />
-              </>
-            )}
-      
+      {isModalOpen && (
+        <>
+          <div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0" />
+          <Modal
+            onClose={() => {
+              setIsModalOpen(false);
+            }}
+          />
+        </>
+      )}
     </div>
   );
 }
