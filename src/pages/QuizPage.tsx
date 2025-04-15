@@ -18,43 +18,50 @@ export default function QuizCard({ onEndTour }: Props) {
   const [isAnswered, toggleAnswered] = useState(false);
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold flex-col flex">
-      {(question.type === 0 || question.type === 1) && (
-        <>
+      <div className="w-full justify-center mx-auto flex flex-auto block gap-[2px]">
+        <div
+          className={`bg-[#ECF7FF] rounded-[20px] min-w-[909px] max-w-full justify-center mx-auto flex flex-auto block`}
+        >
+          <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
+            <span>{Number(tourId) + 1} тур</span>
+          </div>
+          <div className="m-auto text-center w-[1222px]">
+            <div className="text-aspide-blue text-[20px]">
+              ВОПРОС {Number(questionId) + 1}/{questionCount}
+            </div>
+            <div className="text-[60px] tracking-[-2%] leading-[100%]">
+              <pre className="font-inter text-dark-blue font-semibold text-[60px] tracking-[-2%] leading-[100%] text-center">
+                {question.title}
+              </pre>
+            </div>
+          </div>
+        </div>
+        {(question.type === 2 || question.type === 4) && (
           <div
-            className={`bg-[#ECF7FF] rounded-[20px] w-full justify-center mx-auto flex flex-auto block`}
-          >
-            <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px] relative">
-              <span>{Number(tourId) + 1} тур</span>
-            </div>
-            <div className="m-auto ml-[169px] text-center w-[1222px]">
-              <div className="text-aspide-blue text-[20px]">
-                ВОПРОС {Number(questionId) + 1}/{questionCount}
-              </div>
-              <div className="text-[60px] tracking-[-2%] leading-[100%]">
-                <pre className="font-inter text-dark-blue font-semibold text-[60px] tracking-[-2%] leading-[100%] text-center">
-                  {question.title}
-                </pre>
-              </div>
-            </div>
-          </div>
-          <div className="w-full gap-[2px] justify-between mt-[2px] grid grid-cols-4">
-            {question.answers.map((answer: string, index: number) => (
-              <AnswerButton
-                key={String(questionId) + index}
-                answer={answer}
-                answerNumber={index + 1}
-                correct={index === question.correct}
-                isAnswered={isAnswered}
-                type={question.type}
-                onAnswered={() => {
-                  toggleAnswered(true);
-                  index === question.correct &&
-                    setCorrectAnswers(correctAnswers + 1);
-                }}
-              />
-            ))}
-          </div>
-        </>
+            className={
+              "w-[909px] flex-none block bg-white rounded-[20px] flex "
+            }
+          ></div>
+        )}
+      </div>
+      {question.type !== 5 && (
+        <div className="w-full gap-[2px] justify-between mt-[2px] grid grid-cols-4">
+          {question.answers.map((answer: string, index: number) => (
+            <AnswerButton
+              key={String(questionId) + index}
+              answer={answer}
+              answerNumber={index + 1}
+              correct={index === question.correct}
+              isAnswered={isAnswered}
+              type={question.type}
+              onAnswered={() => {
+                toggleAnswered(true);
+                index === question.correct &&
+                  setCorrectAnswers(correctAnswers + 1);
+              }}
+            />
+          ))}
+        </div>
       )}
       <div className="block flex gap-[2px] mt-[2px] w-full">
         <button

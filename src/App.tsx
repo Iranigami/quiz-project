@@ -37,7 +37,6 @@ function App() {
         />
         <Route path="/info/:tourId/:questionId" element={<InfoPage />} />
       </Routes>
-      
     </Router>
   );
 }

@@ -184,9 +184,18 @@ export const tours = [
       {
         title: "45",
         type: 2,
-        answers: [""],
-        correct: 0
-      }
+        answers: [
+          "SOUTH-WEST (юго-запад)",
+          "SOUTH-EAST (юго-восток)",
+          "NORTH (север)",
+          "SOUTH (юг)",
+          "WEST (запад)",
+          "EAST (восток)",
+          "NORTH-WEST (северо-запад)",
+          "NORTH-EAST (северо-восток)",
+        ],
+        correct: 0,
+      },
     ],
-  }
+  },
 ];

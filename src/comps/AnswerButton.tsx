@@ -77,10 +77,29 @@ export default function AnswerButton({
             </div>
           </div>
           <img
-            src={`/src/assets/images/${answer}.png`}
+            src={`/src/assets/images/questions/${answer}.png`}
             alt="answer"
             className={`z-[-1] absolute ${state === "default" && isAnswered && "opacity-[50%]"}`}
           />
+        </button>
+      );
+    }
+    default: {
+      return (
+        <button
+          className={`w-full min-h-[120px] rounded-[20px] justify-center items-center flex relative cursor-pointer
+          ${state === "default" && "bg-white text-dark-blue"} 
+          ${state === "correct" && "bg-[#44BE72] text-white"}
+          ${state === "incorrect" && "bg-[#E3605F] text-white"}
+          ${state === "default" && isAnswered && "opacity-[50%]"}
+          ${className}`}
+          disabled={isAnswered}
+          onClick={toggleClick}
+        >
+          <div className="opacity-[50%] text-[14px] absolute top-[16px] left-[16px]">
+            {answerNumber}
+          </div>
+          <div className="text-[20px] font-semibold">{answer}</div>
         </button>
       );
     }
