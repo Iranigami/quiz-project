@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   className?: string;
@@ -23,6 +23,10 @@ export default function AnswerButton({
   };
 
   const [state, setState] = useState("default"); //default, correct, incorrect
+  
+  useEffect(() => {
+    !isAnswered && setState("default");
+  }, [isAnswered]);
 
   return (
     <button

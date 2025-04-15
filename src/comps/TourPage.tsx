@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import map from "../assets/images/map.svg";
+import { tours } from "../data";
+import { useState } from "react";
+import Modal from "./Modal";
 
-type Props = {
-  tourName: string;
-  tourNumber: number;
-};
-
-export default function TourPage({ tourName, tourNumber }: Props) {
+export default function TourPage() {
   const navigate = useNavigate();
+  const {tourId} = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter font-semibold">
       <div className="bg-[#ECF7FF] rounded-[20px] w-fill h-[858px] font-inter text-dark-blue font-semibold justify-center items-center mx-auto py-[20%]">
@@ -18,10 +18,10 @@ export default function TourPage({ tourName, tourNumber }: Props) {
         />
         <div className="mx-auto text-center w-[1222px]">
           <div className="text-aspide-blue text-[20px]">
-            ВОПРОС {tourNumber}
+            {Number(tourId)+1} тур
           </div>
           <div className="text-[80px] tracking-[-2%] leading-[100%]">
-            {tourName}
+            {tours[Number(tourId)].title}
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@ export default function TourPage({ tourName, tourNumber }: Props) {
         <button
           className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
           onClick={() => {
-            navigate("/");
+            setIsModalOpen(true);
           }}
         >
           НА ГЛАВНУЮ
@@ -37,12 +37,23 @@ export default function TourPage({ tourName, tourNumber }: Props) {
         <button
           className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
           onClick={() => {
-            navigate("/quiz");
+            navigate(`/quiz/${tourId}/0`);
           }}
         >
           ДАЛЕЕ
         </button>
       </div>
+            {isModalOpen && (
+              <>
+                <div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0" />
+                <Modal
+                  onClose={() => {
+                    setIsModalOpen(false);
+                  }}
+                />
+              </>
+            )}
+      
     </div>
   );
 }

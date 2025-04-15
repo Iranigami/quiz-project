@@ -28,7 +28,7 @@ export default function StartPage() {
           <button
             className="w-[290px] h-[60px] bg-white rounded-[9px] justify-center text-center items-center text-dark-blue mx-auto mt-[40px] cursor-pointer"
             onClick={() => {
-              navigate("/tour");
+              navigate("/tour/0");
             }}
           >
             НАЧАТЬ
