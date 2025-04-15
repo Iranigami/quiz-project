@@ -7,9 +7,7 @@ import ResultPage from "./comps/ResultPage";
 import { tours } from "./data";
 
 function App() {
-  //тестовые данные на время
-  const questionsCount = 12;
-  const res = 6;
+  const [result, setResult] = useState(0);
 
 
   return (
@@ -20,6 +18,7 @@ function App() {
           path="/quiz/:tourId/:questionId"
           element={
             <QuizCard
+            onEndTour={(correctAnswers) => {setResult(correctAnswers)}}
             />
           }
         />
@@ -28,11 +27,10 @@ function App() {
           element={<TourPage/>}
         />
         <Route
-          path="/result/:tour_id"
+          path="/result/:tourId"
           element={
             <ResultPage
-              answeredQuestions={res}
-              totalQuestions={questionsCount}
+              answeredQuestions={result}
             />
           }
         />
