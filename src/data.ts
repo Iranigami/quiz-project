@@ -178,4 +178,15 @@ export const tours = [
       },
     ],
   },
+  {
+    title: "Викторина",
+    questions: [
+      {
+        title: "45",
+        type: 2,
+        answers: [""],
+        correct: 0
+      }
+    ],
+  }
 ];
