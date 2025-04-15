@@ -4,8 +4,11 @@ import { useState } from "react";
 import Modal from "./Modal";
 import { tours } from "../data";
 
+type Props = {
+  onEndTour: (correctAnswers: number) => void;
+}
 
-export default function QuizCard() {
+export default function QuizCard({onEndTour}: Props) {
   const {tourId, questionId} = useParams();
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const questionCount = tours[Number(tourId)].questions.length;
@@ -29,8 +32,10 @@ export default function QuizCard() {
         </div>
       </div>
       <div className="flex gap-[2px] justify-between mt-[2px]">
-        {question.answers.map((answer: string, index: number) => (
+        {question.answers.map((answer: string, index: number,) => 
+        (
           <AnswerButton
+            key = {String(questionId) + index}
             answer={answer}
             answerNumber={index + 1}
             correct={index === question.correct}
@@ -56,8 +61,7 @@ export default function QuizCard() {
           disabled={!isAnswered}
           onClick={() => {
             if (Number(questionId) == (questionCount-1)){
-
-              console.log(correctAnswers);
+              onEndTour(correctAnswers);
               navigate(`/result/${tourId}`);
             }
             else {
