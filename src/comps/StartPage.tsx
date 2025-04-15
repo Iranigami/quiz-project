@@ -1,8 +1,8 @@
-import img1 from "../assets/images/img1.svg";
-import img2 from "../assets/images/img2.svg";
-import ship from "../assets/images/ship.svg";
-import face from "../assets/images/face.svg";
-import national from "../assets/images/national.svg";
+import img1 from "../assets/images/icons/img1.svg";
+import img2 from "../assets/images/icons/img2.svg";
+import ship from "../assets/images/icons/ship.svg";
+import face from "../assets/images/icons/face.svg";
+import national from "../assets/images/icons/national.svg";
 import { useNavigate } from "react-router-dom";
 
 export default function StartPage() {

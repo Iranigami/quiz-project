@@ -18,9 +18,9 @@ export default function QuizCard({ onEndTour }: Props) {
   const [isAnswered, toggleAnswered] = useState(false);
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold">
-      {question.type === 0 && (
+      {(question.type === 0 || question.type === 1) && (
         <>
-          <div className="bg-[#ECF7FF] rounded-[20px] w-fill h-[736px] justify-center items-center mx-auto py-[10%]">
+          <div className={`bg-[#ECF7FF] rounded-[20px] w-fill ${question.type ? "h-[549px]" : "h-[736px]"}   justify-center items-center mx-auto py-[10%]`}>
             <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
               <span>{Number(tourId) + 1} тур</span>
             </div>
@@ -28,8 +28,8 @@ export default function QuizCard({ onEndTour }: Props) {
               <div className="text-aspide-blue text-[20px]">
                 ВОПРОС {Number(questionId) + 1}/{questionCount}
               </div>
-              <div className="text-[80px] tracking-[-2%] leading-[100%]">
-                {question.title}
+              <div className="text-[60px] tracking-[-2%] leading-[100%]">
+                <pre className="font-inter text-dark-blue font-semibold text-[60px] tracking-[-2%] leading-[100%] text-center">{question.title}</pre>
               </div>
             </div>
           </div>
@@ -41,6 +41,7 @@ export default function QuizCard({ onEndTour }: Props) {
                 answerNumber={index + 1}
                 correct={index === question.correct}
                 isAnswered={isAnswered}
+                type={question.type}
                 onAnswered={() => {
                   toggleAnswered(true);
                   index === question.correct &&
