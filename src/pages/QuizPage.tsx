@@ -17,16 +17,16 @@ export default function QuizCard({ onEndTour }: Props) {
   const navigate = useNavigate();
   const [isAnswered, toggleAnswered] = useState(false);
   return (
-    <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold">
+    <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold flex-col flex">
       {(question.type === 0 || question.type === 1) && (
         <>
           <div
-            className={`bg-[#ECF7FF] rounded-[20px] w-fill ${question.type ? "h-[549px]" : "h-[736px]"}   justify-center items-center mx-auto py-[10%]`}
+            className={`bg-[#ECF7FF] rounded-[20px] w-full justify-center mx-auto flex flex-auto block`}
           >
-            <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
+            <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px] relative">
               <span>{Number(tourId) + 1} тур</span>
             </div>
-            <div className="mx-auto text-center w-[1222px]">
+            <div className="m-auto ml-[169px] text-center w-[1222px]">
               <div className="text-aspide-blue text-[20px]">
                 ВОПРОС {Number(questionId) + 1}/{questionCount}
               </div>
@@ -37,7 +37,7 @@ export default function QuizCard({ onEndTour }: Props) {
               </div>
             </div>
           </div>
-          <div className="flex gap-[2px] justify-between mt-[2px]">
+          <div className="w-full gap-[2px] justify-between mt-[2px] grid grid-cols-4">
             {question.answers.map((answer: string, index: number) => (
               <AnswerButton
                 key={String(questionId) + index}
@@ -56,7 +56,7 @@ export default function QuizCard({ onEndTour }: Props) {
           </div>
         </>
       )}
-      <div className="flex gap-[2px] mt-[2px]">
+      <div className="block flex gap-[2px] mt-[2px] w-full">
         <button
           className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
           onClick={() => {
