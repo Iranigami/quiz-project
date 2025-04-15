@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import map from "../assets/images/map.svg";
+import map from "../assets/images/map.png";
 import { tours } from "../data";
 import { useState } from "react";
 import Modal from "./Modal";
