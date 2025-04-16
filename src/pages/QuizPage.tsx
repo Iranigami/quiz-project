@@ -3,6 +3,7 @@ import AnswerButton from "../comps/AnswerButton";
 import { useEffect, useRef, useState } from "react";
 import Modal from "../comps/Modal";
 import { tours } from "../data";
+import AnswerInput from "../comps/AnswerInput";
 
 type Props = {
   onEndTour: (correctAnswers: number, questionCount: number) => void;
@@ -25,7 +26,6 @@ export default function QuizCard({ onEndTour }: Props) {
     if (question.correct.includes(index)) {
       setCorrectAnswers(correctAnswers + 1);
       givenAnswers.current = givenAnswers.current + 1;
-      console.log(givenAnswers);
     }
     if (
       question.correct.length === 1 ||
@@ -52,6 +52,9 @@ export default function QuizCard({ onEndTour }: Props) {
                 {question.title}
               </pre>
             </div>
+            {question.type===5 && (
+              <AnswerInput/>
+            )}
           </div>
         </div>
         {image && (
@@ -99,13 +102,16 @@ export default function QuizCard({ onEndTour }: Props) {
           onClick={() => {
             if (question.type === 1) {
               onEndTour(correctAnswers, questionCount);
+              givenAnswers.current=0;
               navigate(`/info/${tourId}/${questionId}`);
             } else {
               if (Number(questionId) == questionCount - 1) {
                 onEndTour(correctAnswers, questionCount);
+                givenAnswers.current=0;
                 navigate(`/result/${tourId}`);
               } else {
                 toggleAnswered(false);
+                givenAnswers.current=0;
                 navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
               }
             }
