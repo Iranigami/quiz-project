@@ -12,20 +12,26 @@ import ResultPage from "./pages/ResultPage";
 import { tours } from "./data";
 import InfoPage from "./pages/InfoPage";
 import PageNotFound from "./pages/PageNotFound";
+import Keyboard from "./comps/Keyboard";
 
 function App() {
   const [result, setResult] = useState(0);
+  const [tourResult, setTourResult] = useState(0);
+  const [currentTotalQuestions, setCurrentTotalQuestions] = useState(0);
 
   return (
     <Router>
       <Routes>
+        <Route path="/test" element={<Keyboard />} />
         <Route path="/" element={<StartPage />} />
         <Route
           path="/quiz/:tourId/:questionId"
           element={
             <QuizCard
-              onEndTour={(correctAnswers) => {
-                setResult(correctAnswers);
+              onEndTour={(correctAnswers, questionCount) => {
+                setTourResult(correctAnswers);
+                setResult(result + correctAnswers);
+                setCurrentTotalQuestions(currentTotalQuestions + questionCount);
               }}
             />
           }
@@ -33,7 +39,7 @@ function App() {
         <Route path="/tour/:tourId" element={<TourPage />} />
         <Route
           path="/result/:tourId"
-          element={<ResultPage answeredQuestions={result} />}
+          element={<ResultPage answeredQuestions={tourResult} />}
         />
         <Route path="/info/:tourId/:questionId" element={<InfoPage />} />
       </Routes>

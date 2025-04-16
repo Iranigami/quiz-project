@@ -1,11 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import AnswerButton from "../comps/AnswerButton";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "../comps/Modal";
 import { tours } from "../data";
 
 type Props = {
-  onEndTour: (correctAnswers: number) => void;
+  onEndTour: (correctAnswers: number, questionCount: number) => void;
 };
 
 export default function QuizCard({ onEndTour }: Props) {
@@ -16,6 +16,24 @@ export default function QuizCard({ onEndTour }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [isAnswered, toggleAnswered] = useState(false);
+  const givenAnswers = useRef(0);
+  //@ts-ignore
+  const image = question.image || undefined;
+
+  const answerHandler = (index: number) => {
+    //@ts-ignore
+    if (question.correct.includes(index)) {
+      setCorrectAnswers(correctAnswers + 1);
+      givenAnswers.current = givenAnswers.current + 1;
+      console.log(givenAnswers);
+    }
+    if (
+      question.correct.length === 1 ||
+      givenAnswers.current === question.correct.length
+    )
+      toggleAnswered(true);
+  };
+
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold flex-col flex">
       <div className="w-full justify-center mx-auto flex flex-auto block gap-[2px]">
@@ -25,7 +43,7 @@ export default function QuizCard({ onEndTour }: Props) {
           <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
             <span>{Number(tourId) + 1} тур</span>
           </div>
-          <div className="m-auto text-center w-[1222px]">
+          <div className="m-auto text-center w-[80%]">
             <div className="text-aspide-blue text-[20px]">
               ВОПРОС {Number(questionId) + 1}/{questionCount}
             </div>
@@ -36,33 +54,36 @@ export default function QuizCard({ onEndTour }: Props) {
             </div>
           </div>
         </div>
-        {(question.type === 2 || question.type === 4) && (
+        {image && (
           <div
             className={
-              "w-[909px] flex-none block bg-white rounded-[20px] flex "
+              "w-[909px] flex-none block bg-white rounded-[20px] flex justify-center items-center"
             }
-          ></div>
+          >
+            <img
+              src={`/src/assets/images/questions/${image}.png`}
+              alt={image}
+              className="w-[466px] h-[466px]"
+            />
+          </div>
         )}
       </div>
-      {question.type !== 5 && (
-        <div className="w-full gap-[2px] justify-between mt-[2px] grid grid-cols-4">
-          {question.answers.map((answer: string, index: number) => (
-            <AnswerButton
-              key={String(questionId) + index}
-              answer={answer}
-              answerNumber={index + 1}
-              correct={index === question.correct}
-              isAnswered={isAnswered}
-              type={question.type}
-              onAnswered={() => {
-                toggleAnswered(true);
-                index === question.correct &&
-                  setCorrectAnswers(correctAnswers + 1);
-              }}
-            />
-          ))}
-        </div>
-      )}
+      <div className="w-full gap-[2px] justify-between mt-[2px] grid grid-cols-4">
+        {question.answers.map((answer: string, index: number) => (
+          <AnswerButton
+            key={String(questionId) + index}
+            answer={answer}
+            answerNumber={index + 1}
+            //@ts-ignore
+            correct={question.correct.includes(index)}
+            isAnswered={isAnswered}
+            type={question.type}
+            onAnswered={() => {
+              answerHandler(index);
+            }}
+          />
+        ))}
+      </div>
       <div className="block flex gap-[2px] mt-[2px] w-full">
         <button
           className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
@@ -77,11 +98,11 @@ export default function QuizCard({ onEndTour }: Props) {
           disabled={!isAnswered}
           onClick={() => {
             if (question.type === 1) {
-              onEndTour(correctAnswers);
+              onEndTour(correctAnswers, questionCount);
               navigate(`/info/${tourId}/${questionId}`);
             } else {
               if (Number(questionId) == questionCount - 1) {
-                onEndTour(correctAnswers);
+                onEndTour(correctAnswers, questionCount);
                 navigate(`/result/${tourId}`);
               } else {
                 toggleAnswered(false);
