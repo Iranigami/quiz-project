@@ -42,8 +42,7 @@ export default function QuizCard({ onEndTour }: Props) {
     if (question.correct.includes(answer.toLowerCase())) {
       setCorrectAnswers(correctAnswers + 1);
       setInputState("correct");
-    }
-    else {
+    } else {
       setInputState("incorrect");
     }
     toggleAnswered(true);
@@ -66,13 +65,14 @@ export default function QuizCard({ onEndTour }: Props) {
                 {question.title}
               </pre>
             </div>
-            {question.type===5 && (
+            {question.type === 5 && (
               <AnswerInput
                 key={window.location.pathname}
                 state={inputState}
                 submitAnswer={(answer) => {
                   answerInputHandler(answer);
-                }}/>
+                }}
+              />
             )}
           </div>
         </div>
@@ -119,35 +119,36 @@ export default function QuizCard({ onEndTour }: Props) {
           className={`bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer ${!isAnswered && "opacity-[40%]"}`}
           disabled={!isAnswered}
           onClick={() => {
-            switch(question.type) {
-            case 1 : {
-              onEndTour(correctAnswers, questionCount);
-              givenAnswers.current=0;
-              navigate(`/info/${tourId}/${questionId}`);
-              break;
-            } 
-            case 5 :{
-              onEndTour(correctAnswers, questionCount);
-              givenAnswers.current=0;
-              setInputState("default");
-              setHintOpen(true);
-              toggleAnswered(false);
-              break;
-            }
-            default: {
-              if (Number(questionId) == questionCount - 1) {
+            switch (question.type) {
+              case 1: {
                 onEndTour(correctAnswers, questionCount);
-                givenAnswers.current=0;
+                givenAnswers.current = 0;
+                navigate(`/info/${tourId}/${questionId}`);
+                break;
+              }
+              case 5: {
+                onEndTour(correctAnswers, questionCount);
+                givenAnswers.current = 0;
                 setInputState("default");
-                navigate(`/result/${tourId}`);
-              } else {
+                setHintOpen(true);
                 toggleAnswered(false);
-                givenAnswers.current=0;
-                setInputState("default");
-                navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
+                break;
+              }
+              default: {
+                if (Number(questionId) == questionCount - 1) {
+                  onEndTour(correctAnswers, questionCount);
+                  givenAnswers.current = 0;
+                  setInputState("default");
+                  navigate(`/result/${tourId}`);
+                } else {
+                  toggleAnswered(false);
+                  givenAnswers.current = 0;
+                  setInputState("default");
+                  navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
+                }
               }
             }
-          }}}
+          }}
         >
           ДАЛЕЕ
         </button>
@@ -167,14 +168,15 @@ export default function QuizCard({ onEndTour }: Props) {
           <div className="w-full h-full fixed absolute bg-dark-blue opacity-[50%] z-100 top-0 left-0" />
           <HintModal
             //@ts-ignore
-            title = {question.hint.title || undefined}
+            title={question.hint.title || undefined}
             //@ts-ignore
-            text = {question.hint.text || undefined}
-            onClose={()=>{setHintOpen(false)}}
+            text={question.hint.text || undefined}
+            onClose={() => {
+              setHintOpen(false);
+            }}
           />
         </>
       )}
-
     </div>
   );
 }

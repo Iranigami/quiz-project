@@ -13,6 +13,7 @@ import { tours } from "./data";
 import InfoPage from "./pages/InfoPage";
 import PageNotFound from "./pages/PageNotFound";
 import Keyboard from "./comps/Keyboard";
+import PartGame from "./comps/PartsGame";
 
 function App() {
   const [result, setResult] = useState(0);
@@ -22,7 +23,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/test" element={<Keyboard />} />
+        <Route path="/test" element={<PartGame />} />
         <Route path="/" element={<StartPage />} />
         <Route
           path="/quiz/:tourId/:questionId"
