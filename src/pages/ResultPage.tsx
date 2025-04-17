@@ -13,16 +13,17 @@ type Props = {
 export default function ResultPage({ answeredQuestions }: Props) {
   const navigate = useNavigate();
   const { tourId } = useParams();
-  const questionCount = tours[Number(tourId)].questions.length;
+  const questionCount =
+    tourId!=undefined ? tours[Number(tourId)].questions.length : 76;
   const result = questionCount / answeredQuestions;
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed">
       <div className="bg-[#ECF7FF] rounded-[20px] w-fill h-[858px] font-inter text-dark-blue font-semibold justify-center items-center mx-auto py-[158px]">
-        <div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
+        {tourId != undefined && (<div className="w-[130px] h-[54px] rounded-full bg-white text-[24px] justify-center items-center flex absolute top-[20px] left-[20px]">
           <span>{Number(tourId) + 1} тур</span>
         </div>
+        )}
         {result === 1 && (
           <div className="w-[1004px] h-[542px] justify-center text-center items-center mx-auto">
             <img src={great} alt="great" className="mx-auto" />
@@ -64,19 +65,22 @@ export default function ResultPage({ answeredQuestions }: Props) {
         <button
           className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
           onClick={() => {
-            setIsModalOpen(true);
+            if (tourId == undefined) navigate("/");
+            else setIsModalOpen(true);
           }}
         >
           НА ГЛАВНУЮ
         </button>
-        <button
-          className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
-          onClick={() => {
-            navigate(`/tour/${Number(tourId) + 1}`); //добавить обработку последнего тура
-          }}
-        >
-          ПРОДОЛЖИТЬ КВИЗ
-        </button>
+        {tourId !== undefined && (
+          <button
+            className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
+            onClick={() => {
+              navigate(`/tour/${Number(tourId) + 1}`);
+            }}
+          >
+            ПРОДОЛЖИТЬ КВИЗ
+          </button>
+        )}
       </div>
       {isModalOpen && (
         <>

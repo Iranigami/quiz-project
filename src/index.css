@@ -32,6 +32,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  scrollbar-width: thin;
+  scrollbar-color: #5c59fd #ecf7ff;
 }
 
 h1 {

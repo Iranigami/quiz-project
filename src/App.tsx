@@ -1,5 +1,5 @@
 import { useState } from "react";
-import QuizCard from "./pages/QuizPage";
+import QuizPage from "./pages/QuizPage";
 import StartPage from "./pages/StartPage";
 import TourPage from "./pages/TourPage";
 import {
@@ -14,6 +14,7 @@ import InfoPage from "./pages/InfoPage";
 import PageNotFound from "./pages/PageNotFound";
 import Keyboard from "./comps/Keyboard";
 import PartGame from "./comps/PartsGame";
+import ExamplePage from "./pages/ExamplePage";
 
 function App() {
   const [result, setResult] = useState(0);
@@ -23,12 +24,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/test" element={<PartGame />} />
         <Route path="/" element={<StartPage />} />
         <Route
           path="/quiz/:tourId/:questionId"
           element={
-            <QuizCard
+            <QuizPage
               onEndTour={(correctAnswers, questionCount) => {
                 setTourResult(correctAnswers);
                 setResult(result + correctAnswers);
@@ -43,6 +43,11 @@ function App() {
           element={<ResultPage answeredQuestions={tourResult} />}
         />
         <Route path="/info/:tourId/:questionId" element={<InfoPage />} />
+        <Route path="/example/:tourId" element={<ExamplePage />} />
+        <Route
+          path="/result"
+          element={<ResultPage answeredQuestions={result} />}
+        />
       </Routes>
     </Router>
   );

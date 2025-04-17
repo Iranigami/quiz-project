@@ -11,7 +11,7 @@ type Props = {
 export default function AnswerInput({ submitAnswer, state }: Props) {
   const [isKeyboardOpen, setKeyboardOpen] = useState(false);
   const [answer, setAnswer] = useState("");
-  const timeoutId = useRef<number | null>(null);
+  const inputField = document.getElementById("input")!;
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const currAnswer = event.target.value;
     setAnswer(currAnswer);
@@ -21,6 +21,8 @@ export default function AnswerInput({ submitAnswer, state }: Props) {
     <>
       <div className="w-[800px] h-[80px] justify-center text-center mx-auto relative mt-[30px]">
         <input
+          autoComplete="off"
+          id="input"
           disabled={state !== "default"}
           type="text"
           className={`w-full h-full bg-white rounded-[10px] px-[20px] text-[24px] font-medium z-0
@@ -52,9 +54,13 @@ export default function AnswerInput({ submitAnswer, state }: Props) {
       <Keyboard
         opened={isKeyboardOpen}
         onFocus={() => {}}
+        enterButton={(button: string) => {
+          (inputField as HTMLInputElement).value += button;
+        }}
         enterText={() => {
+          setAnswer((inputField as HTMLInputElement).value);
           setKeyboardOpen(false);
-          submitAnswer(answer);
+          submitAnswer((inputField as HTMLInputElement).value);
         }}
       />
     </>

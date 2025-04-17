@@ -80,7 +80,9 @@ export default function AnswerButton({
           <div className="opacity-[50%] text-[14px] absolute top-[16px] left-[16px]">
             {answerNumber}
           </div>
-          <div className="text-[20px] font-semibold">{answer}</div>
+          <div className="text-[20px] font-semibold w-[260px] text-center">
+            {answer}
+          </div>
         </button>
       );
     }

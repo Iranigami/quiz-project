@@ -1,20 +1,22 @@
 import { useNavigate, useParams } from "react-router-dom";
 import AnswerButton from "../comps/AnswerButton";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "../comps/Modal";
 import { tours } from "../data";
 import AnswerInput from "../comps/AnswerInput";
 import HintModal from "../comps/HintModal";
+import PartsGame from "../comps/PartsGame";
 
 type Props = {
   onEndTour: (correctAnswers: number, questionCount: number) => void;
 };
 
-export default function QuizCard({ onEndTour }: Props) {
+export default function QuizPage({ onEndTour }: Props) {
   const { tourId, questionId } = useParams();
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const questionCount = tours[Number(tourId)].questions.length;
   const question = tours[Number(tourId)].questions[Number(questionId)];
+  const totalAnswers = question.answers.length;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const [isAnswered, toggleAnswered] = useState(false);
@@ -47,6 +49,7 @@ export default function QuizCard({ onEndTour }: Props) {
     }
     toggleAnswered(true);
   };
+
   return (
     <div className="w-[1820px] h-[980px] justify-center items-center top-[50px] mx-auto left-0 right-0 fixed font-inter text-dark-blue font-semibold flex-col flex">
       <div className="w-full justify-center mx-auto flex flex-auto block gap-[2px]">
@@ -61,7 +64,9 @@ export default function QuizCard({ onEndTour }: Props) {
               ВОПРОС {Number(questionId) + 1}/{questionCount}
             </div>
             <div className="text-[60px] tracking-[-2%] leading-[100%]">
-              <pre className="font-inter text-dark-blue font-semibold text-[60px] tracking-[-2%] leading-[100%] text-center">
+              <pre
+                className={`font-inter text-dark-blue font-semibold ${question.title.length < 150 && question.type != 4 ? "text-[80px]" : "text-[60px]"} tracking-[-2%] leading-[100%] text-center`}
+              >
                 {question.title}
               </pre>
             </div>
@@ -90,7 +95,9 @@ export default function QuizCard({ onEndTour }: Props) {
           </div>
         )}
       </div>
-      <div className="w-full gap-[2px] justify-between mt-[2px] grid grid-cols-4">
+      <div
+        className={`w-full gap-[2px] justify-between mt-[2px] grid grid-flow-dense ${totalAnswers % 3 === 0 ? `grid-cols-6` : totalAnswers % 4 === 0 ? `grid-cols-4` : `grid-cols-5`}`}
+      >
         {question.answers.map((answer: string, index: number) => (
           <AnswerButton
             key={String(questionId) + index}
@@ -106,6 +113,13 @@ export default function QuizCard({ onEndTour }: Props) {
           />
         ))}
       </div>
+      {question.type === 6 && (
+        <PartsGame
+          onAnswered={() => {
+            toggleAnswered(true);
+          }}
+        />
+      )}
       <div className="block flex gap-[2px] mt-[2px] w-full">
         <button
           className="bg-aspide-blue w-full flex justify-center items-center h-[120px] rounded-[20px] text-white text-[20px] cursor-pointer"
@@ -126,6 +140,20 @@ export default function QuizCard({ onEndTour }: Props) {
                 navigate(`/info/${tourId}/${questionId}`);
                 break;
               }
+              case 4: {
+                if (Number(questionId) == questionCount - 1) {
+                  onEndTour(correctAnswers, questionCount);
+                  givenAnswers.current = 0;
+                  setInputState("default");
+                  navigate(`/example/${tourId}`);
+                } else {
+                  toggleAnswered(false);
+                  givenAnswers.current = 0;
+                  setInputState("default");
+                  navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
+                }
+                break;
+              }
               case 5: {
                 onEndTour(correctAnswers, questionCount);
                 givenAnswers.current = 0;
@@ -134,12 +162,32 @@ export default function QuizCard({ onEndTour }: Props) {
                 toggleAnswered(false);
                 break;
               }
-              default: {
+              case 0: {
                 if (Number(questionId) == questionCount - 1) {
                   onEndTour(correctAnswers, questionCount);
                   givenAnswers.current = 0;
                   setInputState("default");
                   navigate(`/result/${tourId}`);
+                } else {
+                  toggleAnswered(false);
+                  givenAnswers.current = 0;
+                  setInputState("default");
+                  navigate(`/quiz/${tourId}/${Number(questionId) + 1}`);
+                }
+                break;
+              }
+              case 6: {
+                onEndTour(correctAnswers, questionCount);
+                givenAnswers.current = 0;
+                navigate(`/result`);
+                break;
+              }
+              default: {
+                if (Number(questionId) == questionCount - 1) {
+                  onEndTour(correctAnswers, questionCount);
+                  givenAnswers.current = 0;
+                  setInputState("default");
+                  navigate(`/tour/${Number(tourId) + 1}`);
                 } else {
                   toggleAnswered(false);
                   givenAnswers.current = 0;
